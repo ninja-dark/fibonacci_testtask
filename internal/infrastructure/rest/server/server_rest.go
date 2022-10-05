@@ -13,7 +13,7 @@ type ServerRest struct {
 	fibo *cases.Fibo
 }
 
-func NewServer (addr string, h http.Handler) *ServerRest {
+func NewServer(addr string, h http.Handler) *ServerRest {
 	s := &ServerRest{}
 
 	s.srv = http.Server{
@@ -26,14 +26,14 @@ func NewServer (addr string, h http.Handler) *ServerRest {
 	return s
 }
 
-func (s *NewServer) Stop() {
+func (s *ServerRest) Stop() {
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	s.srv.Shutdown(ctx)
 	cancel()
 }
 
-func (s *NewServer) Start(fibo *cases.Fibo) {
-	s.us = fibo
+func (s *ServerRest) Start(fibo *cases.Fibo) {
+	s.fibo = fibo
 	
 	go s.srv.ListenAndServe()
 }
