@@ -5,12 +5,12 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/ninja-dark/fibonacci_testtask/internal/cases"
+	"github.com/ninja-dark/fibonacci_testtask/internal/fiboLogic"
 )
 
 type ServerRest struct {
 	srv http.Server
-	fibo *cases.Fibo
+	fibo *fibologic.Fibo
 }
 
 func NewServer(addr string, h http.Handler) *ServerRest {
@@ -32,7 +32,7 @@ func (s *ServerRest) Stop() {
 	cancel()
 }
 
-func (s *ServerRest) Start(fibo *cases.Fibo) {
+func (s *ServerRest) Start(fibo *fibologic.Fibo) {
 	s.fibo = fibo
 	
 	go s.srv.ListenAndServe()
