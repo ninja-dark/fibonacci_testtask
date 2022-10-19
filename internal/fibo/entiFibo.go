@@ -1,5 +1,5 @@
 package fibo
 
 type Fibonacci struct {
-	Sequence []int
+	Sequence []int64 
 }
