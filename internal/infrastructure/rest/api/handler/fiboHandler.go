@@ -8,7 +8,7 @@ import (
 )
 
 type getFibonacci struct {
-	Sequence []int64 `json: "sequence`
+	Sequence []int64 `json:"sequence"`
 }
 func NewGetFibonacci (s []int64) getFibonacci {
 	return getFibonacci{
@@ -19,6 +19,7 @@ func NewGetFibonacci (s []int64) getFibonacci {
 func (h *Handler) GetFibonacci(c *gin.Context){
 	//get number x
 	x, err := strconv.Atoi(c.Query("x"))
+	
 	if err != nil {
 		newErrorResponse(c, http.StatusBadRequest, "invalid x param")
 		return
@@ -29,10 +30,12 @@ func (h *Handler) GetFibonacci(c *gin.Context){
 		newErrorResponse(c, http.StatusBadRequest, "invalid y param")
 		return
 	}
+
 	//get fibonacci sequence
 	s, err := h.Services.GetSequence(x, y)
 	if err != nil {
 		newErrorResponse(c, http.StatusBadRequest, "Cannot get sequence")
 	}
+	c.JSON(http.StatusOK, statuseResoinse{"ok"})
 	c.JSON(http.StatusOK, NewGetFibonacci(s))	
 }

@@ -19,7 +19,9 @@ func(f *Fibo) GetSequence(x int, y int) ([]int64, error){
 	if err != nil {
 		return nil, err
 	}
-	sl := []int64{}
+	s := (y -x) +1
+	sl := make([]int64, s)
+	logrus.Print(x, y)
 
 	for i := x; i <= y; i++{
 		sl[i-x], err = f.FindNumber(i)

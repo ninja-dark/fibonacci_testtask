@@ -1,2 +1,2 @@
 RestApi: "8080"
-MemCache: mc:11211
+MemCache: "11211"
