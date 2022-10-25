@@ -3,15 +3,19 @@
 
 Запустить использую Makefile 
 1. Сборка Docker образа
-bush
+```bush
 make docker-build
+```
 2. Скачать образ memcache 
-bush
+```bush
 make docker-cache
+```
 3. Запустить сервер fibonacci
-bush
-make docker-run 
+```bush
+make docker-run
+```
 пример REST API запроса 
 
-bush
+```bush
 curl -X GET "localhost:8080/fibonacci?x=1&y=5"
+```
