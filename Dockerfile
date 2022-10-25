@@ -12,7 +12,7 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build  -o ./main ./
 FROM scratch 
 
 WORKDIR /app
-COPY --from=build /app/main /app/main
+COPY --from=build /app/main /app/fibonacci
 
 CMD [ "./fibonacci" ]
 
