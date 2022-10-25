@@ -1,0 +1,17 @@
+	syntax = "proto3";
+
+	option go_package = "github.com/ninja-dark/fibonacci_testtask/internal/infrastructure/grpcsrv";
+
+	package grps;
+
+	service Fibonacci{
+		rpc Sequences(FiboRequest) returns (FiboResponse){}
+	}
+
+	message FiboRequest{
+		int64 x = 1;
+		int64 y = 2;
+	}
+	message FiboResponse{
+		repeated int64 result = 1;
+	}

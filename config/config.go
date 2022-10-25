@@ -1,13 +1,12 @@
 package config
 
 import (
-	"fmt"
-
 	"github.com/spf13/viper"
 )
 
 type Config struct {
 	Rest     string
+	GrpcPort string
 	Memcache string
 }
 
@@ -23,7 +22,6 @@ func ParseConfig(path string) (*Config, error){
 	if err := viper.Unmarshal(&cfg); err != nil {
 		return nil, err
 	}
-	fmt.Printf(cfg.Rest)
 	return &cfg, nil
 }
 func setDefaults(){

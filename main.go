@@ -10,9 +10,11 @@ import (
 	"github.com/bradfitz/gomemcache/memcache"
 	"github.com/ninja-dark/fibonacci_testtask/config"
 	"github.com/ninja-dark/fibonacci_testtask/internal/fiboLogic"
+	grpcsrv "github.com/ninja-dark/fibonacci_testtask/internal/infrastructure/grpcSrv"
 	"github.com/ninja-dark/fibonacci_testtask/internal/infrastructure/rest/api/handler"
 	"github.com/ninja-dark/fibonacci_testtask/internal/infrastructure/rest/server"
 	"github.com/sirupsen/logrus"
+	"google.golang.org/grpc"
 )
 	const(
 		configPath = "config/configs.yaml"
@@ -30,6 +32,7 @@ func main() {
 		logrus.Fatalf("error initializating configs: %s" , err.Error())
 	}
 	restApi := cfg.Rest
+	grpcPort := cfg.GrpcPort
 	cache := cfg.Memcache
 	
 	m := memcache.New(cache)
@@ -38,7 +41,7 @@ func main() {
 	}
 	
 	f:= fibologic.Fibo{Cache: m}
-	
+	//srart rest api
 	srv := new(server.Server)
 	rest := handler.Handler{
 		Services: &f,
@@ -49,7 +52,12 @@ func main() {
 		}
 	}()
 	logrus.Print("Fibonacci Started")
+	// start grps
+	grpcNew:= grpc.NewServer()
+	grpcSrv:= &grpcsrv.ServerG{Handler: &f}
 
+	go grpcsrv.Run(grpcNew, grpcSrv, grpcPort)
+	
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGTERM, syscall.SIGINT)
 	<- quit
